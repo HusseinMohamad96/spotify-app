@@ -4,16 +4,18 @@ import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
+import { AddArtistComponent } from './add-artist/add-artist.component';
 import { BrowseComponent } from './browse/browse.component';
 import { CoreRoutingModule } from './core-routing.module';
 import { SpotifyService } from './services/spotify.service';
 
 
 @NgModule({
-  declarations: [BrowseComponent],
+  declarations: [BrowseComponent, AddArtistComponent],
   providers: [SpotifyService],
   imports: [
     CommonModule,
@@ -25,8 +27,9 @@ import { SpotifyService } from './services/spotify.service';
     MatInputModule,
     MatButtonModule,
     MatCardModule,
-    MatIconModule
+    MatIconModule,
+    MatDatepickerModule
   ],
-  exports: [BrowseComponent]
+  exports: [BrowseComponent, AddArtistComponent]
 })
 export class CoreModule { }

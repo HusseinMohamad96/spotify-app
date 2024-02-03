@@ -11,6 +11,9 @@
     <button mat-raised-button
             color="primary"
             (click)="searchArtist()">Search</button>
+    <button mat-raised-button
+            color="primary"
+            [routerLink]="['../add-artist']">Register</button>
   </div>
 
   <div *ngIf="albums.length > 0"
