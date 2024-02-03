@@ -1,0 +1,83 @@
+<div class="h-full bg-slate-100">
+  <div class="flex justify-center items-center gap-x-5 pt-5"
+       *ngIf="albums.length == 0">
+    <mat-form-field class="example-full-width">
+      <mat-label>Search for an artist</mat-label>
+      <input matInput
+             placeholder="Artist name"
+             [(ngModel)]="artistName">
+
+    </mat-form-field>
+    <button mat-raised-button
+            color="primary"
+            (click)="searchArtist()">Search</button>
+  </div>
+
+  <div *ngIf="albums.length > 0"
+       class="cursor-pointer pl-5 pt-5"
+       (click)="goBackToArtists()">
+    <mat-icon fontIcon="arrow_back"></mat-icon>
+  </div>
+
+  <div *ngIf="artists.length > 0 && albums.length == 0"
+       class="mt-4 grid grid-cols-4 gap-8 bg-slate-100 px-5">
+    <div *ngFor="let artist of artists"
+         class="flex-col ">
+      <mat-card (click)="searchAlbums(artist.name)"
+                class="cursor-pointer">
+        <mat-card-header class="flex justify-center">
+          <mat-card-title class="text-center h-16 flex justify-center">{{artist.name}}</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <div class="flex flex-col justify-center gap-y-2">
+            <div class="flex flex-center">
+              <img [src]="artist.images[0]?.url"
+                   [height]="artist.images[0]?.height"
+                   class="object-contain">
+            </div>
+
+            <div *ngIf="!artist.images[0]?.url"
+                 class="flex justify-center items-center w-full size-4/5">
+              <mat-icon fontIcon="broken_image"
+                        class="broken-img"></mat-icon>
+            </div>
+            <div class="text-center">
+              <mat-icon fontIcon="star"
+                        *ngFor="let i of getStarRating(artist.popularity)"></mat-icon>
+            </div>
+            <div class="text-center font-semibold font-sans text-base">{{artist.followers.total}} followers</div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+
+  <div *ngIf="albums.length > 0"
+       class="mt-4 grid grid-cols-4 gap-8 bg-slate-100 px-5">
+    <div *ngFor="let album of albums"
+         class="flex-col ">
+      <mat-card class="cursor-pointer">
+        <mat-card-header>
+          <mat-card-title class="text-center">{{album.name}}</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <div class="flex flex-col justify-center gap-y-2">
+            <div class="flex flex-center">
+              <img [src]="album.images[0]?.url"
+                   [height]="album.images[0]?.height"
+                   [width]="album.images[0]?.width"
+                   class="object-contain">
+            </div>
+
+            <div *ngIf="!album.images[0]?.url"
+                 class="flex justify-center items-center w-full size-4/5">
+              <mat-icon fontIcon="broken_image"
+                        class="broken-img"></mat-icon>
+            </div>
+          </div>
+
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+</div>
