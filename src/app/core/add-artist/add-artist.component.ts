@@ -20,7 +20,6 @@ export class AddArtistComponent {
   }
 
   getSongs(index: number): FormArray {
-
     const control = this.albums.controls[index]
     return control.get("songs") as FormArray;
   }
@@ -44,7 +43,7 @@ export class AddArtistComponent {
     });
   }
 
-  addAlbum(): void {
+  addAlbum(event: Event): void {
     event?.preventDefault()
     const albumForm = this.fb.group({
       picture: [''],
@@ -52,17 +51,15 @@ export class AddArtistComponent {
       songs: this.fb.array([])
     })
     this.albums.push(albumForm)
-    console.log(this.albums)
   }
 
-  addSong(index: number) {
+  addSong(index: number, event: Event) {
     event?.preventDefault()
     const songForm = this.fb.group({
       name: [''],
       duration: ['']
     })
     this.getSongs(index).push(songForm)
-    console.log(this.getSongs(index))
   }
 
   getAsFormGroup(control: any): FormGroup<any> {
@@ -70,7 +67,16 @@ export class AddArtistComponent {
   }
 
   onSubmit() {
-    console.log(this.registerForm)
+    console.log(this.registerForm.value)
+  }
+
+  showError(controlName: string): boolean {
+    const control = this.registerForm.controls[controlName]
+    return control.invalid && (control.dirty || control.touched)
+  }
+
+  hasError(control: string, error: string): boolean {
+    return this.registerForm.controls[control].hasError(error)
   }
 
   private ageValidator(minAge: number) {

@@ -1,18 +1,23 @@
 <div class="flex h-full bg-slate-100 flex-col justify-start">
+  <div class="cursor-pointer pl-5 pt-5 absolute"
+       [routerLink]="['../browse']">
+    <mat-icon fontIcon="arrow_back"></mat-icon>
+  </div>
   <div class="text-center flex justify-center text-5xl font-bold my-5">Register New Artist</div>
   <form [formGroup]="registerForm"
-        class="flex flex-col justify-center p-10"
+        class="flex flex-col justify-center p-10 bg-slate-100"
         (ngSubmit)="onSubmit()">
     <mat-form-field>
       <mat-label>First Name</mat-label>
       <input matInput
              formControlName="firstName"
              placeholder="First Name">
-      <mat-error
-                 *ngIf="registerForm.get('firstName')!.invalid && (registerForm.get('firstName')!.dirty || registerForm.get('firstName')!.touched)">
-        <div *ngIf="registerForm.get('firstName')!.errors!['required']">First Name is required.</div>
-        <div *ngIf="registerForm.get('firstName')!.errors!['minlength']">First Name must be at least 3 characters.</div>
-      </mat-error>
+      @if(showError('firstName') && hasError('firstName', 'required')) {
+      <mat-error> First Name is required.</mat-error>
+      }
+      @if(showError('firstName') && hasError('firstName', 'minlength')) {
+      <mat-error> First Name must be at least 3 characters.</mat-error>
+      }
     </mat-form-field>
 
     <mat-form-field>
@@ -20,11 +25,12 @@
       <input matInput
              formControlName="lastName"
              placeholder="Last Name">
-      <mat-error
-                 *ngIf="registerForm.get('lastName')!.invalid && (registerForm.get('lastName')!.dirty || registerForm.get('lastName')!.touched)">
-        <div *ngIf="registerForm.get('lastName')!.errors!['required']">Last Name is required.</div>
-        <div *ngIf="registerForm.get('lastName')!.errors!['minlength']">Last Name must be at least 3 characters.</div>
-      </mat-error>
+      @if(showError('lastName') && hasError('lastName', 'required')) {
+      <mat-error> Last Name is required.</mat-error>
+      }
+      @if(showError('lastName') && hasError('lastName', 'minlength')) {
+      <mat-error> Last Name must be at least 3 characters.</mat-error>
+      }
     </mat-form-field>
 
     <mat-form-field>
@@ -36,12 +42,13 @@
       <mat-datepicker-toggle matSuffix
                              [for]="dobPicker"></mat-datepicker-toggle>
       <mat-datepicker #dobPicker></mat-datepicker>
-      <mat-error
-                 *ngIf="registerForm.get('dob')!.invalid && (registerForm.get('dob')!.dirty || registerForm.get('dob')!.touched)">
-        <div *ngIf="registerForm.get('dob')!.errors!['required']">Date of Birth is required.</div>
-        <div *ngIf="registerForm.get('dob')!.errors!['ageError']">You must be at least {{
-          registerForm.get('dob')!.errors!['ageError']!['required'] }} years old.</div>
-      </mat-error>
+      @if(showError('dob') && hasError('dob', 'required')) {
+      <mat-error> Date of Birth is required.</mat-error>
+      }
+      @if(showError('dob') && hasError('dob', 'ageError')) {
+      <mat-error> You must be at least {{
+        registerForm.get('dob')!.errors!['ageError']!['requiredAge'] }} years old</mat-error>
+      }
     </mat-form-field>
 
     <mat-form-field>
@@ -49,21 +56,26 @@
       <input matInput
              formControlName="email"
              placeholder="Email">
-      <mat-error
-                 *ngIf="registerForm.get('email')!.invalid && (registerForm.get('email')!.dirty || registerForm.get('email')!.touched)">
-        <div *ngIf="registerForm.get('email')!.errors!['email']">Invalid email format.</div>
-      </mat-error>
+      @if(showError('email') && hasError('email', 'required')) {
+      <mat-error> Email is required.</mat-error>
+      }
+      @if(showError('email') && hasError('email', 'email')) {
+      <mat-error> Invalid email format.</mat-error>
+      }
     </mat-form-field>
 
     <mat-form-field>
-      <mat-label>Phone Number *</mat-label>
+      <mat-label>Phone Number</mat-label>
       <input matInput
              formControlName="phoneNumber"
              placeholder="Phone Number">
-      <mat-error
-                 *ngIf="registerForm.get('phoneNumber')!.invalid && (registerForm.get('phoneNumber')!.dirty || registerForm.get('phoneNumber')!.touched)">
-        <div *ngIf="registerForm.get('phoneNumber')!.errors!['pattern']">Invalid phone number format.</div>
-      </mat-error>
+      @if(showError('phoneNumber') && hasError('phoneNumber', 'required')) {
+      <mat-error> Phone number is required.</mat-error>
+      }
+      @if(showError('phoneNumber') && hasError('phoneNumber', 'pattern')) {
+      <mat-error> Invalid phone number format.</mat-error>
+      }
+
     </mat-form-field>
 
     <mat-form-field>
@@ -101,12 +113,13 @@
       <ng-container *ngFor="let albumForm of albums.controls; let i=index">
         <form [formGroup]="getAsFormGroup(albumForm)"
               class="flex gap-x-5 pl-5">
-          <mat-form-field>
+          <mat-form-field class="max-input-height">
+            <mat-label>Album Picture</mat-label>
             <input matInput
                    formControlName="picture"
-                   placeholder="url">
+                   placeholder="Picture url">
           </mat-form-field>
-          <mat-form-field>
+          <mat-form-field class="max-input-height">
             <mat-label>Album Date</mat-label>
             <input matInput
                    [matDatepicker]="albumDatePicker"
@@ -117,27 +130,30 @@
             <mat-datepicker #albumDatePicker></mat-datepicker>
           </mat-form-field>
           <!-- songs form -->
-          <ng-container formArrayName="songs">
+          <div formArrayName="songs"
+               class="flex flex-col">
             <ng-container *ngFor="let songForm of getSongs(i).controls">
               <form [formGroup]="getAsFormGroup(songForm)"
                     class="flex flex-col gap-x-5">
                 <mat-form-field>
+                  <mat-label>Song name</mat-label>
                   <input matInput
                          formControlName="name"
                          placeholder="Song name">
                 </mat-form-field>
                 <mat-form-field>
+                  <mat-label>Song duration</mat-label>
                   <input matInput
                          formControlName="duration"
-                         placeholder="duration">
+                         placeholder="Duration">
                 </mat-form-field>
               </form>
             </ng-container>
-          </ng-container>
+          </div>
           <button mat-raised-button
                   color="primary"
                   class="w-1/4 flex"
-                  (click)="addSong(i)">
+                  (click)="addSong(i, $event)">
             <mat-icon fontIcon="add"></mat-icon>
             Add Song
           </button>
@@ -148,7 +164,7 @@
     <button mat-raised-button
             color="primary"
             class="w-1/4 flex"
-            (click)="addAlbum()">
+            (click)="addAlbum($event)">
       <mat-icon fontIcon="add"></mat-icon>
       Add Album
     </button>
