@@ -12,10 +12,10 @@ import { SpotifyService } from '../services/spotify.service';
 })
 export class BrowseComponent {
 
-	artistName = 'iron maiden'
+	searchQuery = 'iron maiden'
 	artists: Artist[] = [];
 	albums: Album[] = []
-
+	selectedArtist = ''
 	constructor(private spotifyService: SpotifyService) { }
 
 	ngOnInit() {
@@ -23,13 +23,14 @@ export class BrowseComponent {
 	}
 
 	searchArtist() {
-		this.spotifyService.searchArtist(this.artistName).pipe(take(1)).subscribe(res => {
+		this.spotifyService.searchArtist(this.searchQuery).pipe(take(1)).subscribe(res => {
 			this.albums = []
 			this.artists = res
 		})
 	}
 
 	searchAlbums(artist: string) {
+		this.selectedArtist = artist
 		this.spotifyService.searchAlbum(artist).pipe(take(1)).subscribe(res => {
 			this.albums = res
 
