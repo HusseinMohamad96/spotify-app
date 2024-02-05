@@ -1,11 +1,11 @@
-<div class="flex h-full bg-slate-100 flex-col justify-start">
+<div class="flex flex-col justify-start">
   <div class="cursor-pointer pl-5 pt-5 absolute"
        [routerLink]="['../browse']">
     <mat-icon fontIcon="arrow_back"></mat-icon>
   </div>
   <div class="text-center flex justify-center text-5xl font-bold my-5">Register New Artist</div>
   <form [formGroup]="registerForm"
-        class="flex flex-col justify-center p-10 bg-slate-100"
+        class="flex flex-col justify-center p-10"
         (ngSubmit)="onSubmit()">
     <mat-form-field>
       <mat-label>First Name</mat-label>
