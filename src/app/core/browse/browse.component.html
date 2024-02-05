@@ -1,5 +1,5 @@
-<div class="h-full bg-slate-100">
-  <div class="flex justify-center items-center gap-x-5 pt-5"
+<div class="pb-6">
+  <div class="flex flex-col px-5 gap-y-5 sm:flex-row sm:justify-center sm:items-center gap-x-5 pt-5"
        *ngIf="albums.length == 0">
     <mat-form-field class="example-full-width">
       <mat-label>Search for an artist</mat-label>
@@ -14,8 +14,11 @@
     <button mat-raised-button
             color="primary"
             [routerLink]="['../add-artist']">Register</button>
-    <mat-spinner *ngIf="loading"
-                 class="spinner"></mat-spinner>
+    <div class="flex justify-center"
+         *ngIf="loading">
+      <mat-spinner class="spinner"></mat-spinner>
+    </div>
+
   </div>
 
   <div *ngIf="albums.length > 0"
@@ -25,7 +28,7 @@
   </div>
 
   <div *ngIf="artists.length > 0 && albums.length == 0"
-       class="mt-4 grid grid-cols-4 gap-8 bg-slate-100 px-5">
+       class="mt-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-8 px-5">
     <div *ngFor="let artist of artists"
          class="flex-col ">
       <mat-card (click)="searchAlbums(artist.name)"
@@ -34,15 +37,15 @@
           <mat-card-title class="text-center h-16 flex justify-center">{{artist.name}}</mat-card-title>
         </mat-card-header>
         <mat-card-content>
-          <div class="flex flex-col justify-center gap-y-2">
-            <div class="flex flex-center">
+          <div class="flex flex-col justify-center gap-y-2 h-72 lg:h-96">
+            <div class="flex justify-center"
+                 *ngIf="artist.images[0]?.url">
               <img [src]="artist.images[0]?.url"
-                   [height]="artist.images[0]?.height"
-                   class="object-contain">
+                   class="object-contain h-60 lg:h-72">
             </div>
 
             <div *ngIf="!artist.images[0]?.url"
-                 class="flex justify-center items-center w-full size-4/5">
+                 class="flex justify-center items-center w-full h-60 lg:h-72">
               <mat-icon fontIcon="broken_image"
                         class="broken-img"></mat-icon>
             </div>
@@ -59,7 +62,7 @@
   <ng-container *ngIf="albums.length > 0">
     <div class="text-center flex justify-center text-3xl font-bold py-5">{{selectedArtist}}'s Albums</div>
     <div *ngIf="albums.length > 0"
-         class="mt-4 grid grid-cols-4 gap-8 bg-slate-100 px-5">
+         class="mt-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5  gap-8  px-5">
       <div *ngFor="let album of albums"
            class="flex-col ">
         <mat-card class="cursor-pointer">
@@ -67,18 +70,17 @@
             <mat-card-title class="text-center">{{album.name}}</mat-card-title>
           </mat-card-header>
           <mat-card-content>
-            <div class="flex flex-col justify-center gap-y-2">
-              <div class="flex flex-center">
+            <div class="flex flex-col justify-center gap-y-2 h-72 lg:h-96">
+              <div class="flex justify-center"
+                   *ngIf="album.images[0]?.url">
                 <img [src]="album.images[0]?.url"
-                     [height]="album.images[0]?.height"
-                     [width]="album.images[0]?.width"
-                     class="object-contain">
+                     class="object-contain h-60 lg:h-72">
               </div>
 
               <div *ngIf="!album.images[0]?.url"
                    class="flex justify-center items-center w-full size-4/5">
                 <mat-icon fontIcon="broken_image"
-                          class="broken-img"></mat-icon>
+                          class="broken-img h-60 lg:h-72"></mat-icon>
               </div>
             </div>
 
