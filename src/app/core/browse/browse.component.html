@@ -1,6 +1,7 @@
 <div class="pb-6">
   <div class="flex flex-col px-5 gap-y-5 sm:flex-row sm:justify-center sm:items-center gap-x-5 pt-5"
        *ngIf="albums.length == 0">
+
     <mat-form-field class="example-full-width">
       <mat-label>Search for an artist</mat-label>
       <input matInput
@@ -26,7 +27,8 @@
        (click)="goBackToArtists()">
     <mat-icon fontIcon="arrow_back"></mat-icon>
   </div>
-
+  <div *ngIf="noResults"
+       class="font-semibold text-slate-950 text-4xl flex justify-center h-screen items-center">No results found</div>
   <div *ngIf="artists.length > 0 && albums.length == 0"
        class="mt-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-8 px-5">
     <div *ngFor="let artist of artists"

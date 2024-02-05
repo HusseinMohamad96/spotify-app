@@ -19,6 +19,7 @@ export class BrowseComponent {
 	selectedArtist = ''
 	unsubscribe$ = new Subject()
 	loading = false
+	noResults = false;
 	constructor(private spotifyService: SpotifyService) { }
 
 	ngOnInit() {
@@ -31,12 +32,14 @@ export class BrowseComponent {
 			return
 		}
 		this.loading = true
+		this.noResults = false
 		this.spotifyService.searchArtist(search).pipe(
 			tap(() => this.loading = false),
 			take(1)
 		).subscribe(res => {
 			this.albums = []
 			this.artists = res
+			this.noResults = res.length === 0
 		})
 	}
 
