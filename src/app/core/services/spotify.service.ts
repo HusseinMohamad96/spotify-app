@@ -21,7 +21,8 @@ export class SpotifyService {
       const now = new Date()
       const expireDate = now.setHours(new Date().getHours() + parseInt(tokenLifeTime) / 3600)
       localStorage.setItem(this.spotifyKey, token)
-      // localStorage.setItem('spotifyAuthExpire', expireDate.to)
+      window.location.hash = ''
+      localStorage.setItem('spotifyAuthExpire', new Date(expireDate).toISOString())
     }
   }
 
