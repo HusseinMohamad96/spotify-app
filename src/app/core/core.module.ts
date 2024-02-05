@@ -13,11 +13,12 @@ import { AddArtistComponent } from './add-artist/add-artist.component';
 import { BrowseComponent } from './browse/browse.component';
 import { CoreRoutingModule } from './core-routing.module';
 import { SpotifyService } from './services/spotify.service';
+import { SpotifyRepository } from './spotify.repository';
 
 
 @NgModule({
   declarations: [BrowseComponent, AddArtistComponent],
-  providers: [SpotifyService],
+  providers: [SpotifyService, SpotifyRepository],
   imports: [
     CommonModule,
     CoreRoutingModule,

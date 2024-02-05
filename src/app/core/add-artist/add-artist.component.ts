@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { SpotifyRepository } from '../spotify.repository';
 
 @Component({
   selector: 'app-add-artist',
@@ -9,7 +10,7 @@ import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@ang
 export class AddArtistComponent {
   registerForm: FormGroup = new FormGroup({})
 
-  constructor(private fb: FormBuilder) { }
+  constructor(private fb: FormBuilder, private spotifyRepo: SpotifyRepository) { }
 
   ngOnInit() {
     this.buildForm()
@@ -67,6 +68,7 @@ export class AddArtistComponent {
   }
 
   onSubmit() {
+    this.spotifyRepo.addArtist(this.registerForm.value)
     console.log(this.registerForm.value)
   }
 
