@@ -6,6 +6,15 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
 
+Use chrome with security features disabled to ignore CORS error.
+FOR WINDOWS USERS:
+Add a new chrome shortcut. Right click -> properties -> shortcut tab -> set Target to the following
+"C:\Program Files\Google\Chrome\Application\chrome.exe" --disable-web-security --disable-gpu --user-data-dir=~/chromeTemp --ignore-certificate-errors
+
+Use the following test user:
+username: nicolino.avory@marsoak.com
+password: HM@12345678
+
 ## Code scaffolding
 
 Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
