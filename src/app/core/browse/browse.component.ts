@@ -27,6 +27,9 @@ export class BrowseComponent {
 	}
 
 	searchArtist(search: string = this.searchQuery.value || '') {
+		if (!search) {
+			return
+		}
 		this.loading = true
 		this.spotifyService.searchArtist(search).pipe(
 			tap(() => this.loading = false),
