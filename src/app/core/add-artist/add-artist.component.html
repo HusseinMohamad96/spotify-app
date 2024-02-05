@@ -109,65 +109,82 @@
                              [for]="startingDatePicker"></mat-datepicker-toggle>
       <mat-datepicker #startingDatePicker></mat-datepicker>
     </mat-form-field>
+    <!-- albums form -->
     <ng-container formArrayName="albums">
-      <ng-container *ngFor="let albumForm of albums.controls; let i=index">
-        <form [formGroup]="getAsFormGroup(albumForm)"
-              class="flex gap-x-5 pl-5">
-          <mat-form-field class="max-input-height">
-            <mat-label>Album Picture</mat-label>
-            <input matInput
-                   formControlName="picture"
-                   placeholder="Picture url">
-          </mat-form-field>
-          <mat-form-field class="max-input-height">
-            <mat-label>Album Date</mat-label>
-            <input matInput
-                   [matDatepicker]="albumDatePicker"
-                   formControlName="date"
-                   placeholder="Date">
-            <mat-datepicker-toggle matSuffix
-                                   [for]="albumDatePicker"></mat-datepicker-toggle>
-            <mat-datepicker #albumDatePicker></mat-datepicker>
-          </mat-form-field>
-          <!-- songs form -->
-          <div formArrayName="songs"
-               class="flex flex-col">
-            <ng-container *ngFor="let songForm of getSongs(i).controls">
-              <form [formGroup]="getAsFormGroup(songForm)"
-                    class="flex flex-col gap-x-5">
-                <mat-form-field>
-                  <mat-label>Song name</mat-label>
-                  <input matInput
-                         formControlName="name"
-                         placeholder="Song name">
-                </mat-form-field>
-                <mat-form-field>
-                  <mat-label>Song duration</mat-label>
-                  <input matInput
-                         formControlName="duration"
-                         placeholder="Duration">
-                </mat-form-field>
-              </form>
-            </ng-container>
-          </div>
-          <button mat-raised-button
-                  color="primary"
-                  class="w-1/4 flex"
-                  (click)="addSong(i, $event)">
-            <mat-icon fontIcon="add"></mat-icon>
-            Add Song
-          </button>
-        </form>
-      </ng-container>
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            Albums
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <ng-container *ngFor="let albumForm of albums.controls; let i=index">
+          <form [formGroup]="getAsFormGroup(albumForm)"
+                class="flex justify-between">
+            <div class="flex gap-x-5 w-1/2">
+
+              <mat-form-field class="max-input-height">
+                <mat-label>Album Picture</mat-label>
+                <input matInput
+                       formControlName="picture"
+                       placeholder="Picture url">
+              </mat-form-field>
+              <mat-form-field class="max-input-height">
+                <mat-label>Album Date</mat-label>
+                <input matInput
+                       [matDatepicker]="albumDatePicker"
+                       formControlName="date"
+                       placeholder="Date">
+                <mat-datepicker-toggle matSuffix
+                                       [for]="albumDatePicker"></mat-datepicker-toggle>
+                <mat-datepicker #albumDatePicker></mat-datepicker>
+              </mat-form-field>
+            </div>
+            <!-- songs form -->
+            <div class="flex justify-between gap-x-2 lg:w-1/2">
+              <div formArrayName="songs"
+                   class="flex flex-col">
+                <ng-container *ngFor="let songForm of getSongs(i).controls">
+                  <form [formGroup]="getAsFormGroup(songForm)"
+                        class="flex flex-col gap-x-5">
+                    <mat-form-field>
+                      <mat-label>Song name</mat-label>
+                      <input matInput
+                             formControlName="name"
+                             placeholder="Song name">
+                    </mat-form-field>
+                    <mat-form-field>
+                      <mat-label>Song duration</mat-label>
+                      <input matInput
+                             formControlName="duration"
+                             placeholder="Duration">
+                    </mat-form-field>
+                  </form>
+                </ng-container>
+              </div>
+              <button mat-raised-button
+                      color="primary"
+                      class="w-1/4 flex"
+                      (click)="addSong(i, $event)">
+                <mat-icon fontIcon="add"></mat-icon>
+                Add Song
+              </button>
+            </div>
+
+
+          </form>
+        </ng-container>
+        <button mat-raised-button
+                color="primary"
+                class="w-1/4 flex"
+                (click)="addAlbum($event)">
+          <mat-icon fontIcon="add"></mat-icon>
+          Add Album
+        </button>
+      </mat-expansion-panel>
+
     </ng-container>
 
-    <button mat-raised-button
-            color="primary"
-            class="w-1/4 flex"
-            (click)="addAlbum($event)">
-      <mat-icon fontIcon="add"></mat-icon>
-      Add Album
-    </button>
+
     <div class="flex justify-center mt-10">
       <button mat-raised-button
               type="submit"
