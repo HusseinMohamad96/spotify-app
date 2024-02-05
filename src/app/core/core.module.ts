@@ -8,6 +8,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { AddArtistComponent } from './add-artist/add-artist.component';
 import { BrowseComponent } from './browse/browse.component';
 import { CoreRoutingModule } from './core-routing.module';
@@ -28,7 +29,8 @@ import { SpotifyService } from './services/spotify.service';
     MatButtonModule,
     MatCardModule,
     MatIconModule,
-    MatDatepickerModule
+    MatDatepickerModule,
+    MatProgressSpinnerModule
   ],
   exports: [BrowseComponent, AddArtistComponent]
 })
